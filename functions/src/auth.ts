@@ -1,11 +1,8 @@
-import * as dotenv from 'dotenv';
 import { RequestHandler } from 'express';
 import * as functions from 'firebase-functions';
 import jwt from 'jsonwebtoken';
+import { SECRET } from './env';
 import { firebaseApp } from './firebase';
-
-dotenv.config();
-const secret = process.env.JWT_SECRET!;
 
 type JWTPayloadType = {
 	uid: string;
@@ -23,7 +20,7 @@ export const createJWT: RequestHandler = (req, res) => {
 
 	if (uid && name) {
 		const payload = { uid, name };
-		const token = jwt.sign(payload, secret, { algorithm: 'HS256', expiresIn });
+		const token = jwt.sign(payload, SECRET, { algorithm: 'HS256', expiresIn });
 		res.status(200).json({ message: 'create jwt', jwt: token });
 	} else {
 		res.status(400).send({ error: 'Payloadが指定されていません。' });
@@ -38,7 +35,7 @@ export const authenticateWithJWT: RequestHandler = (req, res, next) => {
 	if (tokenViaBaerer) {
 		try {
 			const token = tokenViaBaerer.split(' ')[1];
-			const jwtPayload = jwt.verify(token, secret);
+			const jwtPayload = jwt.verify(token, SECRET);
 			req.jwtPayload = jwtPayload as JWTPayloadType;
 			next();
 		} catch (error) {
