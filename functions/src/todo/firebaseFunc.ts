@@ -13,8 +13,8 @@ export const getDBTodos = async (uid: string) => {
 	return userDocument.docs.map(doc => ({
 		id: doc.id,
 		...doc.data(),
-		created_at: new Date(doc.data().created_at.toDate()).toLocaleString(),
-		updated_at: new Date(doc.data().updated_at.toDate()).toLocaleString()
+		created_at: doc.data().created_at.toDate() as string,
+		updated_at: doc.data().updated_at.toDate() as string
 	}));
 };
 
