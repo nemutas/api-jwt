@@ -5,7 +5,7 @@ Cloud FirestoreにアクセスするためのAPIサーバーです。JWTの発�
 APIの動作確認は、以下のURLから行えます。<br>
 https://asia-northeast1-nemutas-express-jwt.cloudfunctions.net/api/hello
 
-# 技術スタック
+# Technology
 - Node.js
 - Express
 - Typescript
